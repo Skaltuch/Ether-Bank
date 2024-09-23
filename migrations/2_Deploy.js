@@ -13,10 +13,7 @@ module.exports = async function(deployer, network, accounts) {
 
   console.log(`BankLoanManagement deployed at: ${bankLoanManagement.address}`);
 
-  // Optional: You can add more setup here if needed
-  // For example, you might want to set some initial state or permissions
-
-  // Example: Transfer ownership to a different account if needed
+  
     const newOwner = accounts[1];
     await bankLoanManagement.transferOwnership(newOwner, { from: deployerAccount });
     console.log(`Ownership transferred to: ${newOwner}`);
