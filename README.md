@@ -36,8 +36,9 @@ This project implements a Bank Loan Management system using Ethereum smart contr
  
  git clone https://github.com/Skaltuch/Ether-Bank.git
  
-cd bank-loan-management
+ cd Ether-Bank
 2. Install dependencies:
+npm install  -g truffle ganache solc mocha web3 
 ## Usage
 
 ### Compile Contracts
