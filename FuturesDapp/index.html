@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skaltuchet Bank - DeFi Loan Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+</head>
+<body>
+    <div id="loader" class="loader"></div>
+
+    <header>
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="#" class="navbar-logo">
+                    <img src="logo.svg" alt="Skaltuchet Bank Logo" class="logo-img">
+                    <span class="logo-text">Skaltuchet Bank</span>
+                </a>
+                <ul class="navbar-menu">
+                    <li><a href="#loan-management">Loans</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button id="darkModeToggle" class="dark-mode-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="notification-container" id="notificationContainer"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="hero">
+            <div class="hero-content">
+                <h1>Decentralized Lending Revolution</h1>
+                <p>Borrow and lend with ease on our cutting-edge DeFi platform</p>
+                <button id="connectButton" class="cta-button">
+                    <i class="fas fa-wallet"></i> Connect Wallet
+                </button>
+                
+            </div>
+        </section>
+
+        <section id="account-info" class="account-info">
+            <div class="container">
+                <div class="card">
+                    <h2>Your Account</h2>
+                    <div class="account-details">
+                        <p id="connectedAccount">Not connected</p>
+                        <button id="copyAddressBtn" class="icon-button" title="Copy Address">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    <div class="balance">
+                        <h3>Ether Balance</h3>
+                        <p><span id="etherBalance">0</span>  </p>
+                        <button id="refreshBalanceBtn" class="icon-button" title="Refresh Balance">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <button id="switchAccountButton" class="cta-button">
+            Switch Account
+           
+         </button>
+
+        
+        <section id="loan-management" class="loan-management">
+            <div class="container">
+                <h2>Loan Management</h2>
+                <div class="tabs">
+                    <button class="tab-button active" data-tab="apply">Apply</button>
+                   
+                    <button class="tab-button" data-tab="collateral">Collateral</button>
+                    <button class="tab-button" data-tab="repay">Repay</button>
+                </div>
+                <div class="tab-content active" id="apply-tab">
+                    <form id="applyLoanForm">
+                        <div class="form-group">
+                            <label for="loanAmount">Loan Amount</label>
+                            <input type="number" id="loanAmount" placeholder="Enter loan amount" min="0" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loanDuration">Loan Duration (days)</label>
+                            <input type="number" id="loanDuration" placeholder="Enter loan duration" min="1" required>
+                        </div>
+                        <button type="submit" class="submit-button">Apply for Loan</button>
+                    </form>
+                </div>
+                <div class="tab-content active" id="collateral-tab">
+                    <form id="collateralForm">
+                        <div class="form-group">
+                            <label for="collateralLoanId">Loan ID</label>
+                            <input type="number" id="collateralLoanId" placeholder="Enter loan ID" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="collateralAmount">Collateral Amount (ETH)</label>
+                            <input type="number" id="collateralAmount" placeholder="Enter collateral amount" step="0.01" required>
+                        </div>
+                        <div class="button-group">
+                            <button type="button" id="depositCollateralBtn" class="action-button">Deposit Collateral</button>
+                            <button type="button" id="withdrawCollateralBtn" class="action-button">Withdraw Collateral</button>
+                        </div>
+                    </form>
+                </div>
+                
+
+                <div class="tab-content active" id="repay-tab">
+                    <form id="repaymentForm">
+                        <div class="form-group">
+                            <label for="repaymentLoanId">Loan ID</label>
+                            <input type="number" id="repaymentLoanId" placeholder="Enter loan ID" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="repaymentAmount">Repayment Amount (ETH)</label>
+                            <input type="number" id="repaymentAmount" placeholder="Enter repayment amount" min="0" step="0.01" required>
+                        </div>
+                        <button type="submit" class="submit-button">Make Repayment</button>
+                    </form>
+                </div>
+            </div>
+
+        <section id="loan-info" class="loan-info">
+            <div class="container">
+                <h2>Loan Information</h2>
+                <div class="search-bar">
+                    <input type="number" id="infoLoanId" placeholder="Enter Loan ID">
+                    <button id="getLoanInfoBtn" class="search-button">
+                        <i class="fas fa-search"></i> Get Info
+                    </button>
+                </div>
+                <div id="loanInfoDisplay" class="info-display"></div>
+            </div>
+        </section>
+
+            <section id="loan-approval" class="loan-approval"></section>
+                <div class="container">
+                 <h2>Approve or Reject Loans</h2>
+                  <form id="approveLoanForm">
+                 <div class="form-group">
+                <label for="approveLoanId">Loan ID</label>
+                <input type="number" id="approveLoanId" placeholder="Enter loan ID" required>
+                </div>
+               <button type="submit" class="submit-button">Approve Loan</button>
+               <button type="button" id="rejectLoanBtn" class="submit-button">Reject Loan</button>
+                </form>
+                    </div>
+            </section>
+
+        <section id="about" class="about">
+            <div class="container">
+                <h2>About Skaltuchet Bank</h2>
+                <p>Skaltuchet Bank is a cutting-edge decentralized lending platform revolutionizing the DeFi space. Our smart contract-based system ensures secure, transparent, and efficient loan management, providing an intuitive experience for all your lending needs.</p>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2>Contact Us</h2>
+                <div class="contact-info">
+                    <a href="mailto:Kosrani_yassine@proton.me" class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>Kosrani_yassine@proton.me</span>
+                   
+                    <a href="https://t.me/Rangomania" class="contact-item">
+                        <i class="fab fa-telegram"></i>
+                        <span>Rangomania</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+ <footer>
+        <div class="container">
+            <p>&copy; 2024 Skaltuchet-Bank. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+
+    <script src="app.js"></script>
+    
+      
+        
+
+        
+        
+   
+</body>
+</html>
