@@ -97,12 +97,12 @@ contract BankLoanManagement is LoanBase, ILoanApplication, ILoanApproval, ILoanR
     emit CollateralDeposited(loanId, msg.value);
 }
 
-// New function to disburse the loan amount
+
 function disburseLoan(uint256 loanId) external onlyOwner {
     Loan storage loan = loans[loanId];
     require(loan.status == LoanStatus.Active, "Loan must be active");
 
-    // Transfer the loan amount to the borrower
+    
     payable(loan.borrower).transfer(loan.amount);
     loan.status = LoanStatus.Active; // Ensure status reflects the active loan
     emit LoanDisbursed(loanId, loan.amount);
@@ -139,7 +139,7 @@ function disburseLoan(uint256 loanId) external onlyOwner {
      uint256 amountToSend = collateralAmount;
     
 
-    // Attempt to send the stored amount
+    
     (bool sent, ) = payable(loan.borrower).call{value: amountToSend}("");
     require(sent, "Failed to send Ether");
 
