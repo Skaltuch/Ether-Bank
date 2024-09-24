@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    
 </head>
 <body>
     <div id="loader" class="loader"></div>
@@ -25,7 +26,7 @@
                     <li><a href="#contact">Contact</a></li>
                 </ul>
                 <button id="darkModeToggle" class="dark-mode-toggle">
-                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-moon"></i> 
                 </button>
                 <div class="notification-container" id="notificationContainer"></div>
             </div>
@@ -44,19 +45,20 @@
             </div>
         </section>
 
-        <section id="account-info" class="account-info">
+         <section id="account-info" class="account-info">
             <div class="container">
                 <div class="card">
-                    <h2>Your Account</h2>
+                        <h2>Account </h2>
                     <div class="account-details">
-                        <p id="connectedAccount">Not connected</p>
-                        <button id="copyAddressBtn" class="icon-button" title="Copy Address">
+                        <p id="connectedAccount">Disconnected</p>
+                        <button id="copyAddressBtn" class="cta-button" title="Copy Address">
                             <i class="fas fa-copy"></i>
                         </button>
+                        <div id="connectionStatus"></div>
                     </div>
                     <div class="balance">
-                        <h3>Ether Balance</h3>
-                        <p><span id="etherBalance">0</span>  </p>
+                        <h3>Balance</h3>
+                        <p><span id="etherBalance"></span></p>
                         <button id="refreshBalanceBtn" class="icon-button" title="Refresh Balance">
                             <i class="fas fa-sync-alt"></i>
                         </button>
@@ -65,10 +67,7 @@
             </div>
         </section>
 
-        <button id="switchAccountButton" class="cta-button">
-            Switch Account
            
-         </button>
 
         
         <section id="loan-management" class="loan-management">
@@ -92,6 +91,7 @@
                         </div>
                         <button type="submit" class="submit-button">Apply for Loan</button>
                     </form>
+                    <div id="loanIdResult"></div>
                 </div>
                 <div class="tab-content active" id="collateral-tab">
                     <form id="collateralForm">
@@ -155,10 +155,114 @@
 
         <section id="about" class="about">
             <div class="container">
-                <h2>About Skaltuchet Bank</h2>
-                <p>Skaltuchet Bank is a cutting-edge decentralized lending platform revolutionizing the DeFi space. Our smart contract-based system ensures secure, transparent, and efficient loan management, providing an intuitive experience for all your lending needs.</p>
+                <h2>About Our Decentralized Bank dApp</h2>
+                <p class="intro">Welcome to Skaltuchet-Bank dApp, a revolutionary platform empowering individuals with secure access to loans. Powered by robust smart contracts, our system ensures transparent and efficient loan management, enabling users to control their borrowing journey.</p>
+
+                <h3>Guide</h3>
+                <ol class="steps">
+                    <li><strong>Connect Your Wallet:</strong> Click "Connect Wallet" to link your compatible crypto wallet.</li>
+                    <li><strong>Apply for a Loan:</strong> Navigate to "Apply for a Loan," fill out the application form, and submit.</li>
+                    <li><strong>Deposit Collateral:</strong> After approval, deposit collateral by specifying the amount and confirming the deposit.</li>
+                    <li><strong>Receive Your Loan:</strong> Once collateral is deposited, the loan amount will be transferred to your wallet.</li>
+                    <li><strong>Make Repayments:</strong> Go to "Make Repayment," enter the amount, and confirm your payment.</li>
+                    <li><strong>Withdraw Collateral:</strong> After full repayment, navigate to "Withdraw Collateral" to retrieve your funds.</li>
+                </ol>
+
+                <h3>Loan Statuses Explained</h3>
+                <ul class="statuses">
+                    <li><strong>Applied:</strong> The loan application has been submitted.</li>
+                    <li><strong>Approved:</strong> The loan has been approved.</li>
+                    <li><strong>Active:</strong> The loan is active and collateral has been deposited.</li>
+                    <li><strong>Completed:</strong> The loan has been fully repaid.</li>
+                    <li><strong>Defaulted:</strong> The loan has been rejected or not repaid in time.</li>
+                    <li><strong>Cancelled:</strong> The borrower has cancelled the loan application.</li>
+                </ul>
+
+                <h3>Support</h3>
+                <p>If you have questions or need assistance, join our community forums or contact our support team. We’re here to help!</p>
             </div>
         </section>
+
+        <style>
+            .about {
+                padding: 40px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 20px #21d3d0;
+                transition: var(--transition);
+            }
+
+            .about h2 {
+                font-size: 2.5em;
+                margin-bottom: 20px;
+                color: hsl(194, 81%, 61%);
+            }
+
+            .about .intro {
+                font-size: 1.2em;
+                margin-bottom: 30px;
+                color: #000000;
+            }
+
+            .steps, .statuses {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            .steps li, .statuses li {
+                background: var(--card-background);
+                border: 1px solid var(--secondary-color);
+                border-radius: 5px;
+                margin-bottom: 15px;
+                padding: 15px;
+                transition: background 0.3s;
+            }
+
+            .steps li:hover, .statuses li:hover {
+                background: var(--primary-color);
+            }
+
+            .steps li strong, .statuses li strong {
+                color: var(--success-color);
+            }
+
+            h3 {
+                margin-top: 30px;
+                color: var(--text-color);
+            }
+
+           
+
+            /* Dark Mode Styles */
+            .dark-mode .about {
+                background-color: var(--card-background);
+            }
+
+            .dark-mode h2, 
+            .dark-mode .intro, 
+            .dark-mode h3, 
+            .dark-mode p {
+                color: #f4f4f493;
+            }
+
+            .dark-mode .steps li, 
+            .dark-mode .statuses li {
+                background: var(--background-color);
+                border: 1px solid var(--secondary-color);
+            }
+
+            .dark-mode .steps li:hover, 
+            .dark-mode .statuses li:hover {
+                background: var(--primary-color);
+            }
+
+            .dark-mode .steps li strong, 
+            .dark-mode .statuses li strong {
+                color: var(--success-color);
+            }
+        </style>
+
+
+
 
         <section id="contact" class="contact">
             <div class="container">

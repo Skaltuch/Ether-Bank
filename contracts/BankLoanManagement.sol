@@ -10,10 +10,14 @@ contract BankLoanManagement is LoanBase, ILoanApplication, ILoanApproval, ILoanR
     constructor() LoanBase() {}
 
     // ILoanApplication
-    function applyForLoan(uint256 amount, uint256 duration) external override {
+    function applyForLoan(uint256 amount, uint256 duration) external override returns(uint256) {
         require(amount > 0, "Loan amount must be greater than 0");
         require(duration > 0, "Loan duration must be greater than 0");
-        _createLoan(msg.sender, amount, duration);
+        uint256 loanId= _createLoan(msg.sender, amount, duration);
+		emit LoanApplicationSubmitted(loanId, msg.sender, amount, duration);
+		return loanId;
+		
+		
     }
 
    function cancelApplication(uint256 loanId) external {

@@ -1,7 +1,7 @@
 :root {
     
-  --primary-color: hsl(194, 74%, 52%);
- --secondary-color: #69dbbf;
+  --primary-color: hsl(194, 81%, 61%);
+ --secondary-color: #7af1d4;
     --success-color: #2cbd68;
     --warning-color: #f39c12;
     --error-color: #e74c3c;
@@ -30,19 +30,23 @@ body {
 /* Navbar styles */
 .navbar {
     background-color: var(--card-background);
-    box-shadow: var(--box-shadow);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
+    transition: background-color var(--transition);
 }
 
 .navbar-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 0.5rem 2rem; /* Reduced top and bottom padding */
 }
+
+
+
 
 .navbar-logo {
     display: flex;
@@ -52,13 +56,13 @@ body {
 }
 
 .logo-img {
-    height: 40px;
-    margin-right: 10px;
+    height: 35px;
+    margin-right: 8px; /* Adjusted spacing for better aesthetics */
 }
 
 .logo-text {
     font-weight: 800;
-    font-size: 1.2rem;
+    font-size: 1.5rem; /* Slightly larger for prominence */
 }
 
 .navbar-menu {
@@ -67,18 +71,21 @@ body {
 }
 
 .navbar-menu li {
-    margin-left: 20px;
+    margin-left: 30px; /* Increased spacing for better separation */
 }
 
 .navbar-menu a {
     text-decoration: none;
     color: var(--text-color);
     font-weight: 500;
-    transition: var(--transition);
+    transition: color var(--transition);
+    padding: 5px 10px; /* Added padding for clickable areas */
+    border-radius: 5px; /* Soft corners for hover effect */
 }
 
 .navbar-menu a:hover {
-    color: var(--primary-color);
+    background-color: var(--primary-color); /* Background on hover for better visibility */
+    color: white; /* Change text color for contrast */
 }
 
 /* Hero section */
@@ -87,7 +94,7 @@ body {
     color: white;
     text-align: center;
     padding: 100px 0;
-    margin-top: 25px;
+    margin-top: 40px;
 }
 
 .hero h1 {
@@ -99,6 +106,7 @@ body {
     font-size: 1.2rem;
     margin-bottom: 2rem;
 }
+
 .cta-button {
     background-color: white;
     color: var(--primary-color);
@@ -123,6 +131,53 @@ body {
     transform: translateY(0);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+/* Existing styles... */
+
+/* Connection status indicator styles */
+#connectionStatus {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-left: 10px;
+    transition: all 0.3s ease;
+}
+
+#connectionStatus.connected {
+    background-color: #439246; /* Green when connected */
+    box-shadow: 0 0 8px 2px rgba(76, 175, 80, 0.8); /* Green glow */
+}
+
+#connectionStatus.disconnected {
+    background-color: #F44336; /* Red when disconnected */
+    box-shadow: 0 0 8px 2px rgba(245, 63, 50, 0.8); /* Red glow */
+}
+
+/* Account info section styles */
+.account-info {
+    padding: 2rem 0;
+}
+
+.account-info .card {
+    background-color: #ffffff70;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.account-details {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.account-details p {
+    margin-right: 10px;
+    flex-grow: 1;
+}
+
+/* Other existing styles... */
 
 /* Account info section */
 .account-info {
@@ -345,7 +400,7 @@ footer {
     --warning-color: #ec7b17;
     --error-color: #c0392b;
     --background-color: #111111;
-    --text-color: #f4f4f4da;
+    --text-color: #f4f4f4;
     --card-background: #353434;
 }
 
@@ -363,7 +418,7 @@ body {
 }
 
 body::before {
-  content:  "𒅒⋆༺𓆩☠︎︎𓆪༻⋆𒄆";
+  content:  " 𒅒༺𓆩☠︎︎𓆪༻𒄆";
   position: fixed;
   top: 0;
   left: 0;
@@ -371,7 +426,7 @@ body::before {
   bottom: 0;
   font-size: 20vw;
   font-weight: bold;
-  color: rgba(255, 255, 255, 0.03);
+  color: #7af1d341;
   display: flex;
   justify-content: center;
   align-items: center;

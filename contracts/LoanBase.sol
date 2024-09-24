@@ -9,7 +9,7 @@ interface IERC20 {
 }
 
 interface ILoanApplication {
-    function applyForLoan(uint256 amount, uint256 duration) external;
+    function applyForLoan(uint256 amount, uint256 duration) external returns(uint256);
     function cancelApplication(uint256 loanId) external;
 }
 
@@ -103,6 +103,7 @@ abstract contract LoanBase is Ownable, ReentrancyGuard {
     event RepaymentMade(uint256 indexed loanId, uint256 amount);
     event CollateralDeposited(uint256 indexed loanId, uint256 amount);
     event CollateralWithdrawn(uint256 indexed loanId, uint256 amount);
+	event LoanApplicationSubmitted(uint256 indexed loanId, address indexed borrower, uint256 amount, uint256 duration);
 
     constructor()  Ownable() ReentrancyGuard() {}
 

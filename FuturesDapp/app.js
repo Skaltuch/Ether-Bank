@@ -1,10 +1,9 @@
 let web3;
 let account;
 let bankLoanContract;
-const contractAddress = '0x9c67750586bac0394eef9123e95d231564bb81f6'; // Replace with your deployed contract address
+const contractAddress = '0xe7110Ad3d4f991E9EF6C06eCc468e9D0AA5Cf3b0'; //  deployed contract address
 const bankLoanABI = [
-   
-{
+    {
       "inputs": [],
       "stateMutability": "nonpayable",
       "type": "constructor"
@@ -77,6 +76,37 @@ const bankLoanABI = [
         }
       ],
       "name": "EtherReceived",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "loanId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "borrower",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "duration",
+          "type": "uint256"
+        }
+      ],
+      "name": "LoanApplicationSubmitted",
       "type": "event"
     },
     {
@@ -325,7 +355,13 @@ const bankLoanABI = [
         }
       ],
       "name": "applyForLoan",
-      "outputs": [],
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
       "stateMutability": "nonpayable",
       "type": "function"
     },
@@ -472,12 +508,19 @@ function updateUI() {
     const copyAddressBtn = document.getElementById('copyAddressBtn');
     const connectButton = document.getElementById('connectButton');
     const refreshButton = document.getElementById('refreshBalanceBtn');
+    const connectionStatus = document.getElementById('connectionStatus');
+    const balanceElement = document.getElementById('etherBalance');
 
     if (account) {
         const truncatedAddress = `${account.slice(0, 6)}...${account.slice(-4)}`;
         connectedAccountElement.innerText = truncatedAddress;
         copyAddressBtn.style.display = 'inline-block';
         connectButton.style.display = 'none';
+        refreshButton.style.display = 'inline-block';
+        
+        // Update connection status icon
+        connectionStatus.classList.remove('disconnected');
+        connectionStatus.classList.add('connected');
         
         // Set up the copy address functionality
         copyAddressBtn.onclick = () => copyToClipboard(account);
@@ -488,14 +531,40 @@ function updateUI() {
         connectedAccountElement.innerText = 'Not connected';
         copyAddressBtn.style.display = 'none';
         connectButton.style.display = 'inline-block';
+        refreshButton.style.display = 'none';
         
-        // Optional: Reset Ether balance display when not connected
-        const balanceElement = document.getElementById('EtherBalance');
-        balanceElement.innerHTML = '0 ETH'; // Reset or clear the balance
+        // Update connection status icon
+        connectionStatus.classList.remove('connected');
+        connectionStatus.classList.add('disconnected');
+        
+        // Reset Ether balance display when not connected
+        balanceElement.innerText = '0';
     }
 }
 
-function showNotification(message, type = 'info') {
+// Helper function to copy text to clipboard
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        alert('Address copied to clipboard!');
+    }).catch(err => {
+        console.error('Failed to copy: ', err);
+    });
+}
+
+// Function to update Ether balance
+async function updateEtherBalance() {
+    if (account && web3) {
+        try {
+            const balance = await web3.eth.getBalance(account);
+            const etherBalance = web3.utils.fromWei(balance, 'ether');
+            document.getElementById('etherBalance').innerText = parseFloat(etherBalance).toFixed(4);
+        } catch (error) {
+            console.error('Error fetching balance:', error);
+            document.getElementById('etherBalance').innerText = 'Error';
+        }
+    }
+}
+function showNotification(message, type = 'info',duration=3000) {
     const notificationContainer = document.getElementById('notification-container');
     if (!notificationContainer) {
         console.error('Notification container not found');
@@ -524,8 +593,8 @@ function showNotification(message, type = 'info') {
         notification.classList.remove('show');
         setTimeout(() => {
             notification.remove();
-        }, 300);
-    }, 5000);
+        },500);
+    }, duration);
 }
 
 function getIconClass(type) {
@@ -619,9 +688,19 @@ async function applyForLoan(event) {
     const duration = document.getElementById('loanDuration').value;
     
     try {
-        await bankLoanContract.methods.applyForLoan(web3.utils.toWei(amount, 'ether'), duration)
+        const result = await bankLoanContract.methods.applyForLoan(web3.utils.toWei(amount, 'ether'), duration)
             .send({ from: account });
-        showNotification('Loan application submitted successfully!', 'success');
+        
+        // Extract the loan ID from the transaction receipt
+        const loanAppliedEvent = result.events.LoanApplicationSubmitted;
+        if (loanAppliedEvent) {
+            const loanId = loanAppliedEvent.returnValues.loanId;
+            showNotification(`Loan application submitted successfully! 
+                        Loan ID: ${loanId}`, 'success', 15000);
+        } else {
+            showNotification('Loan application submitted successfully, but loan ID could not be retrieved.', 'success');
+        }
+
     } catch (error) {
         console.error("Error applying for loan:", error);
         showNotification(`Error: ${error.message}`, 'error');
@@ -735,6 +814,14 @@ async function getLoanInfo() {
     const loanId = document.getElementById('infoLoanId').value;
     const loanInfoDisplay = document.getElementById('loanInfoDisplay');
     
+    const statusColors = {
+        0: 'blue',       // Applied
+        1: 'gold',    // Approved
+        2: 'green',      // Active
+        3: 'purple',     // Completed
+        4: 'red'         // Defaulted
+    };
+
     try {
         const loan = await bankLoanContract.methods.loans(loanId).call();
         
@@ -742,6 +829,11 @@ async function getLoanInfo() {
         const amount = web3.utils.fromWei(loan.amount.toString(), 'ether');
         const collateralAmount = web3.utils.fromWei(loan.collateralAmount.toString(), 'ether');
         const repaidAmount = web3.utils.fromWei(loan.repaidAmount.toString(), 'ether');
+
+        // Get status text and color
+        const statusIndex = Number(loan.status);
+        const statusText = ['Applied', 'Approved', 'Active', 'Completed', 'Defaulted'][statusIndex];
+        const statusColor = statusColors[statusIndex];
 
         // Ensure all values are properly converted to strings
         loanInfoDisplay.innerHTML = `
@@ -752,7 +844,7 @@ async function getLoanInfo() {
             <p>Collateral Amount: ${collateralAmount} ETH</p>
             <p>Repaid Amount: ${repaidAmount} ETH</p>
             <p>Next Repayment Date: ${new Date(Number(loan.nextRepaymentDate) * 1000).toLocaleString()}</p>
-            <p>Status: ${['Applied', 'Approved', 'Active', 'Completed', 'Defaulted'][Number(loan.status)]}</p>
+            <p style="color: ${statusColor}">Status: ${statusText}</p>
         `;
     } catch (error) {
         console.error("Error getting loan info:", error);
