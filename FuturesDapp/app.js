@@ -1,3 +1,15 @@
+
+
+
+
+/* NOTE : The main contract is not Deployed to the Mainnet 1 but its deployed on ganache network you have to start a new ganache session Redeploy(truffle migrate --reset)
+
+the contract and replace its address to be able to use the Application , Consider importing Accounts from ganache 
+
+to Metamask to use Free ETH ^__^ */
+ 
+ 
+
 let web3;
 let account;
 let bankLoanContract;
