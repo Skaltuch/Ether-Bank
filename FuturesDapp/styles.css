@@ -1,7 +1,7 @@
 :root {
     
-  --primary-color: hsl(194, 81%, 61%);
- --secondary-color: #7af1d4;
+    --primary-color: hsl(194, 81%, 61%);
+    --secondary-color: #7af1d4;
     --success-color: #2cbd68;
     --warning-color: #f39c12;
     --error-color: #e74c3c;
@@ -58,6 +58,7 @@ body {
 .logo-img {
     height: 35px;
     margin-right: 8px; 
+}
 
 .logo-text {
     font-weight: 800;
@@ -70,7 +71,7 @@ body {
 }
 
 .navbar-menu li {
-    margin-left: 30px;
+    margin-left: 30px; 
 }
 
 .navbar-menu a {
@@ -83,10 +84,11 @@ body {
 }
 
 .navbar-menu a:hover {
-    background-color: var(--primary-color); /
+    background-color: var(--primary-color); 
     color: white; 
+}
 
-/* Hero section */
+
 .hero {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
@@ -148,7 +150,7 @@ body {
 
 #connectionStatus.disconnected {
     background-color: #F44336; 
-    box-shadow: 0 0 8px 2px rgba(245, 63, 50, 0.8);
+    box-shadow: 0 0 8px 2px rgba(245, 63, 50, 0.8); 
 }
 
 
@@ -368,6 +370,7 @@ footer {
 }
 
 
+
    
    
 
@@ -548,7 +551,7 @@ body.dark-mode::before {
 
 
 
-/* Adjust other elements as needed for dark mode */
+
 .dark-mode nav a {
   color: #b0b0b0;
 }
@@ -671,7 +674,8 @@ input:focus {
 
 
 
-/* Tooltips */
+
+
 [data-tooltip] {
     position: relative;
     cursor: help;
@@ -723,7 +727,7 @@ input:focus {
     background-color: var(--error-color);
 }
 
-
+/* Loading indicator */
 .loading {
     display: inline-block;
     position: relative;
@@ -743,6 +747,7 @@ input:focus {
     border-color: var(--text-color) transparent var(--text-color) transparent;
     animation: loading 1.2s infinite;
 }
+
 
 
 
@@ -885,7 +890,7 @@ input:focus {
   background: linear-gradient(45deg, #3f51b5, #00bcd4);
 }
 
-/* Optional: Add a subtle animation */
+
 @keyframes pulse {
   0% {
     box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
