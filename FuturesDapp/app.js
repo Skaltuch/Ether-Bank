@@ -596,7 +596,7 @@ function showNotification(message, type = 'info',duration=3000) {
     notification.appendChild(textSpan);
     notificationContainer.appendChild(notification);
 
-    // Use setTimeout to ensure the transition works
+    
     setTimeout(() => {
         notification.classList.add('show');
     }, 10);
@@ -764,10 +764,9 @@ async function makeRepayment(event) {
         // Convert the amount to Wei
         const amountInWei = web3.utils.toWei(amount, 'ether');
         
-        // Call the smart contract's makeRepayment function with the loanId and amountInWei
+       
         await bankLoanContract.methods.makeRepayment(loanId)
-            .send({ from: account, value: amountInWei }); // Include the repayment amount in the transaction
-        
+            .send({ from: account, value: amountInWei }); 
         showNotification('Repayment made successfully!', 'success');
     } catch (error) {
         console.error("Error making repayment:", error);
@@ -837,17 +836,16 @@ async function getLoanInfo() {
     try {
         const loan = await bankLoanContract.methods.loans(loanId).call();
         
-        // Explicitly convert BigInt values to strings for use in fromWei
+      
         const amount = web3.utils.fromWei(loan.amount.toString(), 'ether');
         const collateralAmount = web3.utils.fromWei(loan.collateralAmount.toString(), 'ether');
         const repaidAmount = web3.utils.fromWei(loan.repaidAmount.toString(), 'ether');
 
-        // Get status text and color
+      
         const statusIndex = Number(loan.status);
         const statusText = ['Applied', 'Approved', 'Active', 'Completed', 'Defaulted'][statusIndex];
         const statusColor = statusColors[statusIndex];
 
-        // Ensure all values are properly converted to strings
         loanInfoDisplay.innerHTML = `
             <p>Borrower: ${loan.borrower}</p>
             <p>Amount: ${amount} ETH</p>
@@ -934,7 +932,7 @@ window.addEventListener('load', () => {
     applyStoredDarkMode();
 });
 
-// Listen for account changes
+
 if (window.ethereum) {
     window.ethereum.on('accountsChanged', handleAccountsChanged);
 }
