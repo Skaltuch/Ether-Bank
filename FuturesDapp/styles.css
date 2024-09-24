@@ -42,7 +42,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5rem 2rem; /* Reduced top and bottom padding */
+    padding: 0.5rem 2rem; 
 }
 
 
@@ -57,12 +57,11 @@ body {
 
 .logo-img {
     height: 35px;
-    margin-right: 8px; /* Adjusted spacing for better aesthetics */
-}
+    margin-right: 8px; 
 
 .logo-text {
     font-weight: 800;
-    font-size: 1.5rem; /* Slightly larger for prominence */
+    font-size: 1.5rem; 
 }
 
 .navbar-menu {
@@ -71,7 +70,7 @@ body {
 }
 
 .navbar-menu li {
-    margin-left: 30px; /* Increased spacing for better separation */
+    margin-left: 30px;
 }
 
 .navbar-menu a {
@@ -79,14 +78,13 @@ body {
     color: var(--text-color);
     font-weight: 500;
     transition: color var(--transition);
-    padding: 5px 10px; /* Added padding for clickable areas */
-    border-radius: 5px; /* Soft corners for hover effect */
+    padding: 5px 10px; 
+    border-radius: 5px; 
 }
 
 .navbar-menu a:hover {
-    background-color: var(--primary-color); /* Background on hover for better visibility */
-    color: white; /* Change text color for contrast */
-}
+    background-color: var(--primary-color); /
+    color: white; 
 
 /* Hero section */
 .hero {
@@ -131,9 +129,9 @@ body {
     transform: translateY(0);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-/* Existing styles... */
 
-/* Connection status indicator styles */
+
+
 #connectionStatus {
     display: inline-block;
     width: 12px;
@@ -144,16 +142,16 @@ body {
 }
 
 #connectionStatus.connected {
-    background-color: #439246; /* Green when connected */
-    box-shadow: 0 0 8px 2px rgba(76, 175, 80, 0.8); /* Green glow */
+    background-color: #439246; 
+    box-shadow: 0 0 8px 2px rgba(76, 175, 80, 0.8); 
 }
 
 #connectionStatus.disconnected {
-    background-color: #F44336; /* Red when disconnected */
-    box-shadow: 0 0 8px 2px rgba(245, 63, 50, 0.8); /* Red glow */
+    background-color: #F44336; 
+    box-shadow: 0 0 8px 2px rgba(245, 63, 50, 0.8);
 }
 
-/* Account info section styles */
+
 .account-info {
     padding: 2rem 0;
 }
@@ -177,9 +175,9 @@ body {
     flex-grow: 1;
 }
 
-/* Other existing styles... */
 
-/* Account info section */
+
+
 .account-info {
     padding: 40px 0;
 }
@@ -368,15 +366,14 @@ footer {
     text-align: center;
     padding: 20px 0;
 }
-/* Notification system */
-/* Notification container */
+
 
    
    
 
 
 
-/* You can keep the pulse animation if desired */
+
 @keyframes pulse {
     0% {
     }
@@ -410,7 +407,7 @@ footer {
     box-sizing: border-box;
 }
 
-/* Skaltuchet Spread Text Styles */
+
 
 body {
   position: relative;
@@ -441,7 +438,7 @@ body::before {
 
 
 
-/* Enhance other text on the page */
+
 main h2 {
   font-family: 'Orbitron', sans-serif;
   color: #21d3d0;
@@ -565,7 +562,7 @@ body.dark-mode::before {
   color: #b0b0b0;
 }
 
-/* Ensure form elements are visible in dark mode */
+
 .dark-mode input[type="number"] {
   background-color: #2c2c2c;
   color: #e0e0e0;
@@ -672,7 +669,6 @@ input:focus {
     100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-/* Countdown Timer */
 
 
 /* Tooltips */
@@ -727,7 +723,7 @@ input:focus {
     background-color: var(--error-color);
 }
 
-/* Loading indicator */
+
 .loading {
     display: inline-block;
     position: relative;
@@ -749,7 +745,6 @@ input:focus {
 }
 
 
-/* Account and Token Cards */
 
 
 
@@ -836,7 +831,7 @@ input:focus {
         flex-direction: column;
     }
 }
-/* Fancy Button Styles */
+
 
 .crypto-button {
   background: linear-gradient(45deg, #350e4a, #0e2a4a);;
