@@ -530,14 +530,11 @@ function updateUI() {
         connectButton.style.display = 'none';
         refreshButton.style.display = 'inline-block';
         
-        // Update connection status icon
         connectionStatus.classList.remove('disconnected');
         connectionStatus.classList.add('connected');
         
-        // Set up the copy address functionality
         copyAddressBtn.onclick = () => copyToClipboard(account);
         
-        // Update the Ether balance
         updateEtherBalance();
     } else {
         connectedAccountElement.innerText = 'Not connected';
@@ -545,16 +542,13 @@ function updateUI() {
         connectButton.style.display = 'inline-block';
         refreshButton.style.display = 'none';
         
-        // Update connection status icon
         connectionStatus.classList.remove('connected');
         connectionStatus.classList.add('disconnected');
         
-        // Reset Ether balance display when not connected
         balanceElement.innerText = '0';
     }
 }
 
-// Helper function to copy text to clipboard
 function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
         alert('Address copied to clipboard!');
@@ -563,7 +557,6 @@ function copyToClipboard(text) {
     });
 }
 
-// Function to update Ether balance
 async function updateEtherBalance() {
     if (account && web3) {
         try {
@@ -622,7 +615,6 @@ function getIconClass(type) {
     }
 }
 
-// The rest of your JavaScript remains the same
 
 function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
@@ -680,7 +672,6 @@ async function connectToMetaMask() {
         showNotification('Failed to connect to MetaMask. Please try again.', 'error');
     }
 }
-//EVENT LISTENERS
 function setupEventListeners() {
     document.getElementById('connectButton').addEventListener('click', connectToMetaMask);
     document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
@@ -703,7 +694,6 @@ async function applyForLoan(event) {
         const result = await bankLoanContract.methods.applyForLoan(web3.utils.toWei(amount, 'ether'), duration)
             .send({ from: account });
         
-        // Extract the loan ID from the transaction receipt
         const loanAppliedEvent = result.events.LoanApplicationSubmitted;
         if (loanAppliedEvent) {
             const loanId = loanAppliedEvent.returnValues.loanId;
@@ -761,7 +751,6 @@ async function makeRepayment(event) {
     const amount = document.getElementById('repaymentAmount').value;
     
     try {
-        // Convert the amount to Wei
         const amountInWei = web3.utils.toWei(amount, 'ether');
         
        
